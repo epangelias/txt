@@ -28,9 +28,11 @@ export default function () {
 
   async function save(content: string) {
     try {
+      const body = JSON.stringify({ content, lastContent })
       saving = true;
-      const res = await fetch("", { method: "POST", body: content });
+      const res = await fetch("", { method: "POST", body });
       if (!res.ok) throw res.statusText;
+      if (res.status == 205) return location.reload();
       lastSaved = Date.now();
       lastContent = content;
     } catch (e) {

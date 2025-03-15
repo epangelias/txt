@@ -40,8 +40,10 @@ async function handler(req: Request) {
     return new Response(html, { headers: { "Content-Type": "text/html" } });
   } else {
     try {
-      const text = await req.text();
-      const res = await db.set(["content", code], text);
+      const data = await db.get<string>(["content", code]);
+      const { content, lastContent } = await req.json();
+      if (data.value != null && data.value != lastContent) return new Response(null, { status: 205 });
+      const res = await db.set(["content", code], content);
       if (!res.ok) throw new Error("Failed to save");
       return new Response();
     } catch (e) {
