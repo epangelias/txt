@@ -18,4 +18,6 @@ textarea {
   resize: none;
   overflow: auto;
   padding: 1rem;
+  word-wrap: break-word;
+  white-space: pre-wrap;
 }
