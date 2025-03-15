@@ -4,7 +4,7 @@ export default function () {
   const textarea = document.querySelector("textarea") as HTMLTextAreaElement;
   const title = document.querySelector("title") as HTMLTitleElement;
 
-  let lastContent = textarea.value;
+  let lastContent = textarea.innerText;
   let saved = true;
   let saving = false;
   let lastSaved = Date.now();
@@ -13,14 +13,14 @@ export default function () {
   textarea.oninput = () => lastChanged = Date.now();
 
   function update() {
-    saved = lastContent == textarea.value;
+    saved = lastContent == textarea.innerText;
     const firstLine = textarea.value.split("\n")[0];
     title.innerText = (saved ? "" : "* ") + (firstLine || "TXT");
 
     if (Date.now() - lastSaved > 5000
       && Date.now() - lastChanged > 1000
       && !saving
-      && !saved) save(textarea.value);
+      && !saved) save(textarea.innerText);
 
     requestAnimationFrame(update);
   }
