@@ -43,8 +43,11 @@ async function handler(req: Request) {
       const data = await db.get<string>(["content", code]);
       const { content, lastContent } = await req.json();
       if (data.value != null && data.value != lastContent) return new Response(null, { status: 205 });
-      const res = await db.set(["content", code], content);
-      if (!res.ok) throw new Error("Failed to save");
+      if (!content) await db.delete(["content", code]);
+      else {
+        const res = await db.set(["content", code], content);
+        if (!res.ok) throw new Error("Failed to save");
+      }
       return new Response();
     } catch (e) {
       console.error(e);
