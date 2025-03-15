@@ -44,4 +44,8 @@ export default function () {
       update();
     }
   }
+
+  globalThis.addEventListener("beforeunload", (event) => {
+    if (!saved || saving) event.preventDefault();
+  });
 }
