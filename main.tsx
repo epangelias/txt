@@ -6,7 +6,7 @@ const db = await Deno.openKv();
 async function page(code: string) {
 
   const res = await db.get<string>(["content", code]);
-  const content = res.value || "TXT";
+  const content = res.value || "";
 
   const title = content.split("\n")[0] ?? "TXT";
 
