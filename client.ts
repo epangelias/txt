@@ -15,7 +15,7 @@ export default function () {
   function update() {
     saved = lastContent == textarea.value;
     const firstLine = textarea.value.split("\n")[0];
-    title.textContent = (saved ? "" : "* ") + (firstLine || "TXT");
+    title.innerText = (saved ? "" : "* ") + (firstLine || "TXT");
 
     if (Date.now() - lastSaved > 5000
       && Date.now() - lastChanged > 1000
