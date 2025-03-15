@@ -32,7 +32,11 @@ export default function () {
       saving = true;
       const res = await fetch("", { method: "POST", body });
       if (!res.ok) throw res.statusText;
-      if (res.status == 205) return location.reload();
+      if (res.status == 205) {
+        saved = true;
+        saving = false;
+        return location.reload();
+      }
       lastSaved = Date.now();
       lastContent = content;
     } catch (e) {
