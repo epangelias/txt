@@ -25,7 +25,7 @@ async function page(code: string) {
       <meta name='theme-color' content="#000000" />
     </head>
     <body>
-      <textarea placeholder="..." autocomplete="on" dangerouslySetInnerHTML={{ __html: content }}></textarea>
+      <textarea placeholder="..." autocomplete="off" dangerouslySetInnerHTML={{ __html: content }}></textarea>
       <style dangerouslySetInnerHTML={{ __html: css }}></style>
       <script dangerouslySetInnerHTML={{ __html: js }}></script>
     </body>
