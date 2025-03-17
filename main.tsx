@@ -40,6 +40,8 @@ async function page(code: string) {
 async function handler(req: Request) {
   const url = new URL(req.url);
   const code = url.pathname.slice(1);
+  console.log({ url, req });
+  console.log(req.headers);
   if (req.method == "GET") {
     const html = "<!DOCTYPE html>\n" + render(await page(code));
     return new Response(html, { headers: { "Content-Type": "text/html" } });
