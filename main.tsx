@@ -16,7 +16,7 @@ async function page(code: string) {
 
   return <html>
     <head>
-      <title>{title}</title>
+      <title>{title.slice(0, 100)}</title>
       <meta charset="UTF-8" />
       <meta name="color-scheme" content="light dark" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -25,9 +25,11 @@ async function page(code: string) {
       <meta name='theme-color' content="#000000" />
     </head>
     <body>
-      <textarea placeholder="..." autocomplete="off" dangerouslySetInnerHTML={{ __html: content }}></textarea>
+      <main style="visibility:hidden">
+        <article>{content}</article>
+      </main>
 
-      <article style="display:none">{content}</article>
+      <textarea placeholder="..." autocomplete="off" dangerouslySetInnerHTML={{ __html: content }}></textarea>
 
       <style dangerouslySetInnerHTML={{ __html: css }}></style>
       <script dangerouslySetInnerHTML={{ __html: js }}></script>
