@@ -26,6 +26,9 @@ async function page(code: string) {
     </head>
     <body>
       <textarea placeholder="..." autocomplete="off" dangerouslySetInnerHTML={{ __html: content }}></textarea>
+
+      <article style="display:none">{content}</article>
+
       <style dangerouslySetInnerHTML={{ __html: css }}></style>
       <script dangerouslySetInnerHTML={{ __html: js }}></script>
     </body>
