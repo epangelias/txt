@@ -40,6 +40,9 @@ async function page(code: string) {
 async function handler(req: Request) {
   const url = new URL(req.url);
   const code = url.pathname.slice(1);
+
+  if (url.pathname == "/robots.txt") return new Response("User-agent: *\nAllow: /");
+
   console.log({ url, req });
   console.log(req.headers);
   if (req.method == "GET") {
