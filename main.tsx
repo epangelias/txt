@@ -25,7 +25,7 @@ async function page(code: string) {
       <meta name='theme-color' content="#000000" />
     </head>
     <body>
-      <main style="visibility:hidden">
+      <main style="opacity:0;pointer-effects:none;position:absolute">
         <article>{content}</article>
       </main>
 
