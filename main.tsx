@@ -25,10 +25,6 @@ async function page(code: string) {
       <meta name='theme-color' content="#000000" />
     </head>
     <body>
-      <main style="opacity:0;pointer-effects:none;position:absolute;z-index:-999">
-        <article>{content}</article>
-      </main>
-
       <textarea placeholder="..." autocomplete="off" dangerouslySetInnerHTML={{ __html: content }}></textarea>
 
       <style dangerouslySetInnerHTML={{ __html: css }}></style>
@@ -43,8 +39,6 @@ async function handler(req: Request) {
 
   if (url.pathname == "/robots.txt") return new Response("User-agent: *\nAllow: /");
 
-  console.log({ url, req });
-  console.log(req.headers);
   if (req.method == "GET") {
     const html = "<!DOCTYPE html>\n" + render(await page(code));
     return new Response(html, { headers: { "Content-Type": "text/html" } });
