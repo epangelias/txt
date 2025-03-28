@@ -1,6 +1,6 @@
 
 
-export default function () {
+export default function (versionstamp: string | null) {
   const textarea = document.querySelector("textarea") as HTMLTextAreaElement;
   const title = document.querySelector("title") as HTMLTitleElement;
 
@@ -28,7 +28,7 @@ export default function () {
 
   async function save(content: string) {
     try {
-      const body = JSON.stringify({ content, lastContent })
+      const body = JSON.stringify({ content, versionstamp })
       saving = true;
       const res = await fetch("", { method: "POST", body });
       if (!res.ok) throw res.statusText;
@@ -37,6 +37,8 @@ export default function () {
         saving = false;
         return location.reload();
       }
+      const data = await res.json();
+      versionstamp = data.versionstamp;
       lastSaved = Date.now();
       lastContent = content;
     } catch (e) {

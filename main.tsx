@@ -12,7 +12,7 @@ async function page(code: string) {
 
   const css = await Deno.readTextFile("./style.css");
   const fun = (await import('./client.ts')).default.toString();
-  const js = `(${fun})()`;
+  const js = `(${fun})("${res.versionstamp}")`;
 
   return <html>
     <head>
@@ -49,15 +49,19 @@ async function handler(req: Request) {
   } else {
     try {
       const data = await db.get<string>(["content", code]);
-      const { content, lastContent } = await req.json();
-      console.log({ content, lastContent, data });
-      if (data.value != null && data.value != lastContent) return new Response(null, { status: 205 });
-      if (!content) await db.delete(["content", code]);
+      const { content, versionstamp } = await req.json();
+      if (data.value != null && data.versionstamp !== versionstamp) {
+        return new Response(null, { status: 205 });
+      }
+      else if (!content && data.value != null) {
+        await db.delete(["content", code]);
+        return new Response(null);
+      }
       else {
         const res = await db.set(["content", code], content);
         if (!res.ok) throw new Error("Failed to save");
+        return Response.json({ versionstamp: res.versionstamp });
       }
-      return new Response();
     } catch (e) {
       console.error(e);
       return Response.error();
