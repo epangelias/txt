@@ -50,6 +50,7 @@ async function handler(req: Request) {
     try {
       const data = await db.get<string>(["content", code]);
       const { content, lastContent } = await req.json();
+      console.log({ content, lastContent });
       if (data.value != null && data.value != lastContent) return new Response(null, { status: 205 });
       if (!content) await db.delete(["content", code]);
       else {
