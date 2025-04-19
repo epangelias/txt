@@ -6,6 +6,7 @@ const db = await Deno.openKv();
 async function page(code: string) {
 
   const res = await db.get<string>(["content", code]);
+
   const content = res.value || "";
 
   const title = content.split("\n")[0] ?? "TXT";
@@ -42,6 +43,12 @@ async function handler(req: Request) {
   const code = url.pathname.slice(1);
 
   if (url.pathname == "/robots.txt") return new Response("User-agent: *\nAllow: /");
+
+  if (!req.headers.get("Accept")?.includes("text/html")) {
+    const res = await db.get<string>(["content", code]);
+    if (res) return new Response(res.value, { headers: { "Content-Type": "text/plain" } });
+    else return Response.error();
+  }
 
   if (req.method == "GET") {
     const html = "<!DOCTYPE html>\n" + render(await page(code));
