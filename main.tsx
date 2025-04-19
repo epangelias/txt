@@ -6,6 +6,7 @@ import { render } from "preact-render-to-string";
 
 const db = await Deno.openKv();
 async function page(code: string) {
+  console.log('cwd:', Deno.cwd);
 
   const res = await db.get<string>(["content", code]);
 
