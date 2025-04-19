@@ -1,3 +1,5 @@
+#!/usr/bin/env -S deno -A
+
 /// <reference lib="deno.unstable" />
 
 import { render } from "preact-render-to-string";
@@ -76,4 +78,4 @@ async function handler(req: Request) {
   }
 }
 
-Deno.serve(handler);
+Deno.serve({ port: Deno.env.get("PORT") }, handler);
