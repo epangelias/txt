@@ -78,4 +78,4 @@ async function handler(req: Request) {
   }
 }
 
-Deno.serve({ port: Deno.env.get("PORT") }, handler);
+Deno.serve({ port: +Deno.env.get("PORT")! || 8000 }, handler);
